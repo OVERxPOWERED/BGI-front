@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function DeploymentCard() {
   return (
     <div
@@ -45,8 +47,9 @@ export default function DeploymentCard() {
         Initialize autonomous sequence or manual override for Sector analysis.
       </p>
 
-      {/* CTA Button */}
-      <button
+      {/* CTA Button — navigates to active inspection */}
+      <Link
+        href="/dashboard/active"
         id="start-inspection-btn"
         className="group flex w-full items-center justify-center gap-3 rounded-xl bg-accent-blue px-6 py-4 font-semibold text-[#0a1628] transition-all duration-200 hover:bg-[#6fd0fa] hover:shadow-[0_0_24px_rgba(79,195,247,0.25)] active:scale-[0.98]"
       >
@@ -66,7 +69,7 @@ export default function DeploymentCard() {
         >
           <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
-      </button>
+      </Link>
     </div>
   );
 }

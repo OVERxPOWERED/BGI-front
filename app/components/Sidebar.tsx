@@ -73,6 +73,15 @@ const navItems = [
 export default function Sidebar() {
   const pathname = usePathname();
 
+  const getIsActive = (href: string) => {
+    // When on the active inspection page, highlight the Dashboard icon
+    if (pathname === "/dashboard/active") {
+      return href === "/dashboard";
+    }
+    // Default: exact match
+    return pathname === href;
+  };
+
   return (
     <aside
       id="sidebar-nav"
@@ -100,7 +109,7 @@ export default function Sidebar() {
       {/* Nav Icons */}
       <nav className="flex flex-1 flex-col items-center gap-1">
         {navItems.map((item) => {
-          const isActive = pathname === item.href;
+          const isActive = getIsActive(item.href);
           return (
             <Link
               key={item.href}
