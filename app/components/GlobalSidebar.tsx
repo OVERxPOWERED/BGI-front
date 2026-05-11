@@ -2,11 +2,24 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { type ReactNode } from "react";
 
-const navItems = [
+/* ────────────────────────────────────────────────────────
+ *  Navigation items
+ * ──────────────────────────────────────────────────────── */
+interface NavItem {
+  href: string;
+  label: string;
+  /** Match sub-routes (e.g. /dashboard matches /dashboard/active) */
+  matchPrefix?: boolean;
+  icon: ReactNode;
+}
+
+const navItems: NavItem[] = [
   {
     href: "/dashboard",
     label: "Dashboard",
+    matchPrefix: true,
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <rect x="2" y="2" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
@@ -70,25 +83,31 @@ const navItems = [
   },
 ];
 
-export default function Sidebar() {
+/* ────────────────────────────────────────────────────────
+ *  Sidebar width constant (used by layout for margin offset)
+ * ──────────────────────────────────────────────────────── */
+export const SIDEBAR_WIDTH = 64; // px — matches w-16
+
+/* ────────────────────────────────────────────────────────
+ *  Component
+ * ──────────────────────────────────────────────────────── */
+export default function GlobalSidebar() {
   const pathname = usePathname();
 
-  const getIsActive = (href: string) => {
-    // When on the active inspection page, highlight the Dashboard icon
-    if (pathname === "/dashboard/active") {
-      return href === "/dashboard";
+  const isActive = (item: NavItem) => {
+    if (item.matchPrefix) {
+      return pathname.startsWith(item.href);
     }
-    // Default: exact match
-    return pathname === href;
+    return pathname === item.href;
   };
 
   return (
     <aside
-      id="sidebar-nav"
-      className="fixed left-0 top-0 z-50 flex h-screen w-[56px] flex-col items-center border-r border-border-subtle bg-sidebar py-4"
+      id="global-sidebar"
+      className="fixed left-0 top-0 z-50 flex h-screen w-16 flex-col items-center border-r border-[#1c1f27] bg-[#0a0c10] py-5"
     >
-      {/* Logo */}
-      <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-surface-elevated">
+      {/* ── Logo ── */}
+      <div className="mb-8 flex h-10 w-10 items-center justify-center rounded-xl bg-[#151820]">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
           <path
             d="M12 2L4 7v6c0 5.5 3.4 10.7 8 12 4.6-1.3 8-6.5 8-12V7l-8-5z"
@@ -106,10 +125,10 @@ export default function Sidebar() {
         </svg>
       </div>
 
-      {/* Nav Icons */}
-      <nav className="flex flex-1 flex-col items-center gap-1">
+      {/* ── Nav Icons ── */}
+      <nav className="flex flex-1 flex-col items-center gap-1.5">
         {navItems.map((item) => {
-          const isActive = getIsActive(item.href);
+          const active = isActive(item);
           return (
             <Link
               key={item.href}
@@ -119,19 +138,20 @@ export default function Sidebar() {
                 group relative flex h-10 w-10 items-center justify-center rounded-lg
                 transition-all duration-200
                 ${
-                  isActive
+                  active
                     ? "bg-accent-blue/15 text-accent-blue"
-                    : "text-text-muted hover:bg-surface-elevated hover:text-text-secondary"
+                    : "text-[#4a4f5c] hover:bg-[#151820] hover:text-[#8b8f98]"
                 }
               `}
             >
-              {/* Active indicator bar */}
-              {isActive && (
-                <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-accent-blue" />
+              {/* Active left-edge indicator */}
+              {active && (
+                <span className="absolute -left-[1px] top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-accent-blue shadow-[0_0_8px_rgba(79,195,247,0.4)]" />
               )}
               {item.icon}
-              {/* Tooltip */}
-              <span className="pointer-events-none absolute left-14 z-50 whitespace-nowrap rounded-md bg-surface-elevated px-2.5 py-1 text-xs font-medium text-text-primary opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
+
+              {/* Hover tooltip */}
+              <span className="pointer-events-none absolute left-[60px] z-[60] whitespace-nowrap rounded-lg bg-[#1e2028] px-3 py-1.5 text-xs font-medium text-text-primary opacity-0 shadow-xl ring-1 ring-[#2a2d35] transition-opacity duration-150 group-hover:opacity-100">
                 {item.label}
               </span>
             </Link>

@@ -18,7 +18,7 @@ const island =
 
 export default function ActiveInspectionPage() {
   return (
-    <div className="h-[calc(100vh-52px)] overflow-hidden bg-[#0a0c10] p-4">
+    <div className="h-[calc(100vh-56px)] overflow-hidden bg-[#0a0c10] p-4">
       {/* ── 3-column bento grid ── */}
       <div className="grid h-full grid-cols-[300px_1fr_400px] gap-5">
         {/* ═══════ LEFT COLUMN ═══════ */}
