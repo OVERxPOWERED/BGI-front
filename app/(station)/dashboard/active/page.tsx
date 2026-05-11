@@ -1,10 +1,10 @@
-import DroneStatus from "@/app/components/active/DroneStatus";
-import SpatialMapping from "@/app/components/active/SpatialMapping";
-import VideoFeed from "@/app/components/active/VideoFeed";
-import StructuralHealth from "@/app/components/active/StructuralHealth";
-import LiveInventory from "@/app/components/active/LiveInventory";
-import MissionProgress from "@/app/components/active/MissionProgress";
-import RecentEvents from "@/app/components/active/RecentEvents";
+import DroneStatus from "@/app/components/active-flight/DroneStatus";
+import SpatialMapping from "@/app/components/active-flight/SpatialMapping";
+import VideoFeed from "@/app/components/active-flight/VideoFeed";
+import StructuralHealth from "@/app/components/active-flight/StructuralHealth";
+import LiveInventory from "@/app/components/active-flight/LiveInventory";
+import MissionProgress from "@/app/components/active-flight/MissionProgress";
+import RecentEvents from "@/app/components/active-flight/RecentEvents";
 
 export const metadata = {
   title: "Active Inspection — BGI Ground Station",

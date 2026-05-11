@@ -1,6 +1,6 @@
-import SystemReadinessCard from "@/app/components/SystemReadinessCard";
-import DeploymentCard from "@/app/components/DeploymentCard";
-import InspectionTable from "@/app/components/InspectionTable";
+import SystemReadinessCard from "@/app/components/dashboard/SystemReadinessCard";
+import DeploymentCard from "@/app/components/dashboard/DeploymentCard";
+import InspectionTable from "@/app/components/dashboard/InspectionTable";
 
 export const metadata = {
   title: "Mission Control — BGI Ground Station",

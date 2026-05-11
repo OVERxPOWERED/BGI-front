@@ -1,14 +1,10 @@
+import DiagnosticsView from "@/app/components/diagnostics/DiagnosticsView";
+
 export const metadata = {
-  title: "Telemetry — BGI Ground Station",
+  title: "Diagnostics Mode — BGI Ground Station",
+  description: "Hardware telemetry, AI intelligence feeds, and ROS2 network diagnostics.",
 };
 
 export default function TelemetryPage() {
-  return (
-    <div className="flex flex-1 items-center justify-center p-6">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold text-text-primary">Telemetry</h1>
-        <p className="mt-2 text-sm text-text-muted">Coming soon — Phase 2</p>
-      </div>
-    </div>
-  );
+  return <DiagnosticsView />;
 }

@@ -1,5 +1,5 @@
-import GlobalSidebar, { SIDEBAR_WIDTH } from "@/app/components/GlobalSidebar";
-import GlobalHeader from "@/app/components/GlobalHeader";
+import GlobalSidebar, { SIDEBAR_WIDTH } from "@/app/components/layout/GlobalSidebar";
+import GlobalHeader from "@/app/components/layout/GlobalHeader";
 
 export default function StationLayout({
   children,

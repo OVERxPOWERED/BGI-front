@@ -13,6 +13,13 @@ interface RouteContext {
 }
 
 const ROUTE_CONTEXTS: Record<string, RouteContext> = {
+  "/telemetry": {
+    subtitle: "DIAGNOSTICS MODE",
+    badges: [
+      { label: "SYSTEM NOMINAL", color: "green" },
+      { label: "DRONE LINKED | ROS2 — 12ms", color: "green" },
+    ],
+  },
   "/dashboard/active": {
     subtitle: "PHASE 2 — ACTIVE INSPECTION",
     badges: [
