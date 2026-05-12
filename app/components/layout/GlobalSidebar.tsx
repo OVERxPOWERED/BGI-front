@@ -15,6 +15,14 @@ interface NavItem {
   icon: ReactNode;
 }
 
+interface UtilityItem {
+  href: string;
+  label: string;
+  /** Match sub-routes (e.g. /dashboard matches /dashboard/active) */
+  matchPrefix?: boolean;
+  icon: ReactNode;
+}
+
 const navItems: NavItem[] = [
   {
     href: "/dashboard",
@@ -50,8 +58,8 @@ const navItems: NavItem[] = [
     ),
   },
   {
-    href: "/terminal",
-    label: "Terminal",
+    href: "/logs",
+    label: "Logs",
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <rect x="2" y="3" width="16" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
@@ -60,28 +68,30 @@ const navItems: NavItem[] = [
       </svg>
     ),
   },
-  {
-    href: "/settings",
-    label: "Settings",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M10 1.5v2M10 16.5v2M3.5 3.5l1.4 1.4M15.1 15.1l1.4 1.4M1.5 10h2M16.5 10h2M3.5 16.5l1.4-1.4M15.1 4.9l1.4-1.4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-  },
+];
+
+const utilityItems: UtilityItem[] = [
   {
     href: "/alerts",
     label: "Alerts",
     icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <path d="M10 2L2 16h16L10 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-        <path d="M10 8v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="10" cy="14" r="0.75" fill="currentColor" />
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
       </svg>
     ),
   },
-];
+  {
+    href: "/settings",
+    label: "Settings",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <circle cx="12" cy="12" r="3" />
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+      </svg>
+    ),
+  },
+]
 
 /* ────────────────────────────────────────────────────────
  *  Sidebar width constant (used by layout for margin offset)
@@ -126,37 +136,71 @@ export default function GlobalSidebar() {
       </div>
 
       {/* ── Nav Icons ── */}
-      <nav className="flex flex-1 flex-col items-center gap-1.5">
-        {navItems.map((item) => {
-          const active = isActive(item);
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              title={item.label}
-              className={`
+      <nav className="flex flex-1 flex-col items-center justify-between">
+        <div className="flex flex-col gap-2">
+          {navItems.map((item) => {
+            const active = isActive(item);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                title={item.label}
+                className={`
                 group relative flex h-10 w-10 items-center justify-center rounded-lg
                 transition-all duration-200
-                ${
-                  active
+                ${active
                     ? "bg-accent-blue/15 text-accent-blue"
                     : "text-[#4a4f5c] hover:bg-[#151820] hover:text-[#8b8f98]"
-                }
+                  }
               `}
-            >
-              {/* Active left-edge indicator */}
-              {active && (
-                <span className="absolute -left-[1px] top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-accent-blue shadow-[0_0_8px_rgba(79,195,247,0.4)]" />
-              )}
-              {item.icon}
+              >
+                {/* Active left-edge indicator */}
+                {active && (
+                  <span className="absolute -left-[1px] top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-accent-blue shadow-[0_0_8px_rgba(79,195,247,0.4)]" />
+                )}
+                {item.icon}
 
-              {/* Hover tooltip */}
-              <span className="pointer-events-none absolute left-[60px] z-[60] whitespace-nowrap rounded-lg bg-[#1e2028] px-3 py-1.5 text-xs font-medium text-text-primary opacity-0 shadow-xl ring-1 ring-[#2a2d35] transition-opacity duration-150 group-hover:opacity-100">
-                {item.label}
-              </span>
-            </Link>
-          );
-        })}
+                {/* Hover tooltip */}
+                <span className="pointer-events-none absolute left-[60px] z-[60] whitespace-nowrap rounded-lg bg-[#1e2028] px-3 py-1.5 text-xs font-medium text-text-primary opacity-0 shadow-xl ring-1 ring-[#2a2d35] transition-opacity duration-150 group-hover:opacity-100">
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          {utilityItems.map((item) => {
+            const active = isActive(item);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                title={item.label}
+                className={`
+                group relative flex h-10 w-10 items-center justify-center rounded-lg
+                transition-all duration-200
+                ${active
+                    ? "bg-accent-blue/15 text-accent-blue"
+                    : "text-[#4a4f5c] hover:bg-[#151820] hover:text-[#8b8f98]"
+                  }
+              `}
+              >
+                {/* Active left-edge indicator */}
+                {active && (
+                  <span className="absolute -left-[1px] top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-accent-blue shadow-[0_0_8px_rgba(79,195,247,0.4)]" />
+                )}
+                {item.icon}
+
+                {/* Hover tooltip */}
+                <span className="pointer-events-none absolute left-[60px] z-[60] whitespace-nowrap rounded-lg bg-[#1e2028] px-3 py-1.5 text-xs font-medium text-text-primary opacity-0 shadow-xl ring-1 ring-[#2a2d35] transition-opacity duration-150 group-hover:opacity-100">
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+
       </nav>
     </aside>
   );
