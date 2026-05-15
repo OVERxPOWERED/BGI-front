@@ -1,6 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+
 
 /* ────────────────────────────────────────────────────────
  *  Route-context map
@@ -162,15 +164,17 @@ export default function GlobalHeader() {
 
         {/* Operator profile */}
         <div className="flex items-center gap-2.5">
-          <span className="text-[11px] font-medium text-text-secondary">
-            Operator
-          </span>
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#1c1f27] bg-[#151820]">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[#4a4f5c]">
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
-            </svg>
-          </div>
+          <Link href={"/profile"} className="flex items-center gap-2.5">
+            <span className="text-[11px] font-medium text-text-secondary">
+              Operator
+            </span>
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#1c1f27] bg-[#151820]">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[#4a4f5c]">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+              </svg>
+            </div>
+          </Link>
         </div>
       </div>
     </header>
